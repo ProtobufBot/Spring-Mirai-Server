@@ -16,11 +16,12 @@ buildscript {
     }
 }
 plugins {
+    idea
     id("org.springframework.boot") version "2.3.4.RELEASE"
     id("io.spring.dependency-management") version "1.0.10.RELEASE"
     id("com.google.protobuf") version "0.8.13"
-    kotlin("jvm") version "1.3.72"
-    kotlin("plugin.spring") version "1.3.72"
+    kotlin("jvm") version "1.4.0"
+    kotlin("plugin.spring") version "1.4.0"
 }
 
 group = "net.lz1998"
@@ -44,6 +45,7 @@ repositories {
 }
 
 dependencies {
+//    implementation("net.mamoe:mirai-core-qqandroid:1.3.0")
     implementation("com.google.protobuf:protobuf-java:3.12.2")
 //    implementation("com.google.protobuf:protobuf-javalite:3.8.0")
     implementation("com.google.protobuf:protobuf-java-util:3.12.2")
@@ -62,6 +64,7 @@ dependencies {
 
 protobuf {
     generatedFilesBaseDir = "$projectDir/src"
+    println(generatedFilesBaseDir)
     protoc { artifact = "com.google.protobuf:protoc:3.7.0" }
 }
 sourceSets {
