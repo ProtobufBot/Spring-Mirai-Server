@@ -2,7 +2,6 @@ package net.lz1998.mirai.plugin;
 
 import net.lz1998.mirai.bot.CoolQ;
 import onebot.OnebotEvent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,7 +17,6 @@ public class CQPlugin {
      * @return 是否继续处理下一个插件, MESSAGE_BLOCK表示不继续，MESSAGE_IGNORE表示继续
      */
     public int onPrivateMessage(CoolQ cq, OnebotEvent.PrivateMessageEvent event) {
-        cq.sendPrivateMsg(event.getUserId(),"hello",false);
         return MESSAGE_IGNORE;
     }
 

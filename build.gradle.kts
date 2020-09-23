@@ -46,6 +46,7 @@ repositories {
 
 dependencies {
 //    implementation("net.mamoe:mirai-core-qqandroid:1.3.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8")
     implementation("com.google.protobuf:protobuf-java:3.12.2")
 //    implementation("com.google.protobuf:protobuf-javalite:3.8.0")
     implementation("com.google.protobuf:protobuf-java-util:3.12.2")
