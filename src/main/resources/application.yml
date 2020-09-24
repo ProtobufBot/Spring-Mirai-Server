@@ -1,0 +1,9 @@
+server:
+  port: 8081
+spring:
+  cq:
+    event:
+      corePoolSize: 5
+      maxPoolSize: 20
+      keepAliveTime: 2000
+      workQueueSize: 512
