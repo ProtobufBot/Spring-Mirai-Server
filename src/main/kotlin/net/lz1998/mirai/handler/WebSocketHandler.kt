@@ -1,15 +1,18 @@
 package net.lz1998.mirai.handler
 
 import com.google.protobuf.util.JsonFormat
-import net.lz1998.mirai.bot.ApiSender
 import net.lz1998.mirai.bot.BotFactory
 import net.lz1998.mirai.bot.CoolQ
+import net.lz1998.mirai.bot.EventProperties
 import onebot.OnebotFrame
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.socket.*
-import org.springframework.web.socket.handler.AbstractWebSocketHandler
 import org.springframework.web.socket.handler.TextWebSocketHandler
+import java.util.concurrent.ArrayBlockingQueue
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.ThreadPoolExecutor
+import java.util.concurrent.TimeUnit
 
 @Component
 class WebSocketHandler : TextWebSocketHandler() {
@@ -21,6 +24,10 @@ class WebSocketHandler : TextWebSocketHandler() {
     val sessionMap = mutableMapOf<Long, WebSocketSession>()
 
     val jsonFormatParser: JsonFormat.Parser = JsonFormat.parser().ignoringUnknownFields()
+
+
+    val executor:ExecutorService = ThreadPoolExecutor(EventProperties.corePoolSize.toInt(),EventProperties.maxPoolSize.toInt(),EventProperties.keepAliveTime.toLong(),TimeUnit.MILLISECONDS
+            ,ArrayBlockingQueue(EventProperties.workQueueSize.toInt()));
 
     @Autowired
     lateinit var frameHandler: FrameHandler
@@ -51,18 +58,17 @@ class WebSocketHandler : TextWebSocketHandler() {
         jsonFormatParser.merge(message.payload, frameBuilder)
         val frame = frameBuilder.build()
         session.sendMessage(PingMessage())
-        Thread {
+        executor.execute {
             frameHandler.handleFrame(frame)
-        }.start()
-
+        }
     }
 
     override fun handleBinaryMessage(session: WebSocketSession, message: BinaryMessage) {
         val frame = OnebotFrame.Frame.parseFrom(message.payload)
         session.sendMessage(PingMessage())
-        Thread {
+        executor.execute {
             frameHandler.handleFrame(frame)
-        }.start()
+        }
     }
 
 
