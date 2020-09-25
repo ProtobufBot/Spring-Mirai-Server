@@ -7,15 +7,15 @@ import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component
 
 @Component
-@ConfigurationProperties("spring.cq.event")
+@ConfigurationProperties("spring.mirai.event")
 object EventProperties {
-    @Value("\${spring.cq.event.corePoolSize}")
+    @Value("\${spring.mirai.event.corePoolSize}")
     lateinit var corePoolSize:String
-    @Value("\${spring.cq.event.maxPoolSize}")
+    @Value("\${spring.mirai.event.maxPoolSize}")
     lateinit var maxPoolSize:String
-    @Value("\${spring.cq.event.keepAliveTime}")
+    @Value("\${spring.mirai.event.keepAliveTime}")
     lateinit var keepAliveTime: String
-    @Value("\${spring.cq.event.workQueueSize}")
+    @Value("\${spring.mirai.event.workQueueSize}")
     lateinit var workQueueSize:String
 
 }
