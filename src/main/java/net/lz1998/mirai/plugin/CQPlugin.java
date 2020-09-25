@@ -2,13 +2,12 @@ package net.lz1998.mirai.plugin;
 
 import net.lz1998.mirai.bot.CoolQ;
 import onebot.OnebotEvent;
-import org.springframework.stereotype.Component;
 
-@Component
-public class CQPlugin {
+
+public abstract class CQPlugin {
     public static final int MESSAGE_BLOCK = 1;
     public static final int MESSAGE_IGNORE = 0;
-
+    private int sort = 5;//根据sort排序
     /**
      * 收到私聊消息时调用此方法
      *
@@ -120,4 +119,14 @@ public class CQPlugin {
     public int onGroupRequest(CoolQ cq, OnebotEvent.GroupRequestEvent event) {
         return MESSAGE_IGNORE;
     }
+
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort() {
+        this.sort = setSortValue();
+    }
+
+    protected abstract int setSortValue();
 }
