@@ -17,13 +17,8 @@ public class CQPluginConfig implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         Map<String,CQPlugin> map =applicationContext.getBeansOfType(CQPlugin.class);
-        this.cqPlugins= new LinkedList<CQPlugin>(map.values());
+        this.cqPlugins= new LinkedList<>(map.values());
         this.cqPlugins.forEach(CQPlugin::setSort);
-        this.cqPlugins.sort(new Comparator<CQPlugin>() {
-            @Override
-            public int compare(CQPlugin o1, CQPlugin o2) {
-                return o1.getSort() - o2.getSort();
-            }
-        });
+        this.cqPlugins.sort(Comparator.comparingInt(CQPlugin::getSort));
     }
 }

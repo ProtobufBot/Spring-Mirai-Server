@@ -6,7 +6,7 @@ fun String.toMessageList(): List<OnebotBase.Message> {
     var interpreting = false
     val sb = StringBuilder()
     var index = 0
-    var messageList = mutableListOf<OnebotBase.Message>()
+    val messageList = mutableListOf<OnebotBase.Message>()
     this.forEach { c: Char ->
         if (c == '[') {
             if (interpreting) {
