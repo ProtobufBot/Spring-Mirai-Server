@@ -4,6 +4,8 @@ spring:
   mirai:
     event:
       corePoolSize: 5
-      maxPoolSize: 20
+      maxPoolSize: 200
       keepAliveTime: 2000
       workQueueSize: 512
+    plugin-list:
+      - net.lz1998.mirai.plugin.DemoPlugin

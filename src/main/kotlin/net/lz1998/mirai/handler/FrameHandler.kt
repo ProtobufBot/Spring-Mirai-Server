@@ -1,7 +1,7 @@
 package net.lz1998.mirai.handler
 
 import net.lz1998.mirai.bot.ApiSender
-import net.lz1998.mirai.bot.CoolQ
+import net.lz1998.mirai.bot.MiraiBot
 import onebot.OnebotFrame
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -15,12 +15,11 @@ class FrameHandler {
     @Autowired
     lateinit var apiSender: ApiSender
 
-
     @Autowired
     lateinit var webSocketHandler: WebSocketHandler
 
     fun handleFrame(frame: OnebotFrame.Frame) {
-        val bot: CoolQ = webSocketHandler.botMap[frame.botId] ?: return
+        val bot: MiraiBot = webSocketHandler.botMap[frame.botId] ?: return
         when (frame.messageType) {
             OnebotFrame.Frame.MessageType.PrivateMessageEvent -> eventHandler.handlePrivateMessageEvent(bot, frame.privateMessageEvent)
             OnebotFrame.Frame.MessageType.GroupMessageEvent -> eventHandler.handleGroupMessageEvent(bot, frame.groupMessageEvent)

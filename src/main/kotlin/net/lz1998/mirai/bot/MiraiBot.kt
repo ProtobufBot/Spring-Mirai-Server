@@ -4,10 +4,10 @@ import net.lz1998.mirai.utils.toMessageList
 import onebot.OnebotApi
 import org.springframework.web.socket.WebSocketSession
 
-class CoolQ {
-    var selfId: Long = 0
-    lateinit var botSession: WebSocketSession
-    lateinit var apiSender: ApiSender
+open class MiraiBot : Bot {
+    override var selfId: Long = 0
+    override lateinit var botSession: WebSocketSession
+    override lateinit var apiSender: ApiSender
 
     /**
      * 发送私聊消息
@@ -17,7 +17,7 @@ class CoolQ {
      * @param auto_escape 消息内容是否作为纯文本发送（即不解析 CQ 码），只在 message 字段是字符串时有效
      * @return 结果
      */
-    fun sendPrivateMsg(user_id: Long, message: String, auto_escape: Boolean): OnebotApi.SendPrivateMsgResp? {
+    override fun sendPrivateMsg(user_id: Long, message: String, auto_escape: Boolean): OnebotApi.SendPrivateMsgResp? {
         val reqBuilder = OnebotApi.SendPrivateMsgReq.newBuilder()
         reqBuilder.userId = user_id
         reqBuilder.addAllMessage(message.toMessageList())
@@ -33,7 +33,7 @@ class CoolQ {
      * @param auto_escape 消息内容是否作为纯文本发送（即不解析 CQ 码），只在 message 字段是字符串时有效
      * @return 结果
      */
-    fun sendGroupMsg(group_id: Long, message: String, auto_escape: Boolean): OnebotApi.SendGroupMsgResp? {
+    override fun sendGroupMsg(group_id: Long, message: String, auto_escape: Boolean): OnebotApi.SendGroupMsgResp? {
         val reqBuilder = OnebotApi.SendGroupMsgReq.newBuilder()
         reqBuilder.groupId = group_id
         reqBuilder.addAllMessage(message.toMessageList())
@@ -48,7 +48,7 @@ class CoolQ {
      * @param message_id 消息 ID
      * @return 结果
      */
-    fun deleteMsg(message_id: Int): OnebotApi.DeleteMsgResp? {
+    override fun deleteMsg(message_id: Int): OnebotApi.DeleteMsgResp? {
         val reqBuilder = OnebotApi.DeleteMsgReq.newBuilder()
         reqBuilder.messageId = message_id
         return apiSender.deleteMsg(botSession, selfId, reqBuilder.build())
@@ -62,7 +62,7 @@ class CoolQ {
      * @param reject_add_request 拒绝此人的加群请求
      * @return 结果
      */
-    fun setGroupKick(group_id: Long, user_id: Long, reject_add_request: Boolean): OnebotApi.SetGroupKickResp? {
+    override fun setGroupKick(group_id: Long, user_id: Long, reject_add_request: Boolean): OnebotApi.SetGroupKickResp? {
         val reqBuilder = OnebotApi.SetGroupKickReq.newBuilder()
         reqBuilder.groupId = group_id
         reqBuilder.userId = user_id
@@ -78,7 +78,7 @@ class CoolQ {
      * @param duration 禁言时长，单位秒，0 表示取消禁言
      * @return 结果
      */
-    fun setGroupBan(group_id: Long, user_id: Long, duration: Int): OnebotApi.SetGroupBanResp? {
+    override fun setGroupBan(group_id: Long, user_id: Long, duration: Int): OnebotApi.SetGroupBanResp? {
         val reqBuilder = OnebotApi.SetGroupBanReq.newBuilder()
         reqBuilder.groupId = group_id
         reqBuilder.userId = user_id
@@ -93,7 +93,7 @@ class CoolQ {
      * @param enable   是否禁言
      * @return 结果
      */
-    fun setGroupWholeBan(group_id: Long, enable: Boolean): OnebotApi.SetGroupWholeBanResp? {
+    override fun setGroupWholeBan(group_id: Long, enable: Boolean): OnebotApi.SetGroupWholeBanResp? {
         val reqBuilder = OnebotApi.SetGroupWholeBanReq.newBuilder()
         reqBuilder.groupId = group_id
         reqBuilder.enable = enable
@@ -108,7 +108,7 @@ class CoolQ {
      * @param card     群名片内容，不填或空字符串表示删除群名片
      * @return 结果
      */
-    fun setGroupCard(group_id: Long, user_id: Long, card: String?): OnebotApi.SetGroupCardResp? {
+    override fun setGroupCard(group_id: Long, user_id: Long, card: String?): OnebotApi.SetGroupCardResp? {
         val reqBuilder = OnebotApi.SetGroupCardReq.newBuilder()
         reqBuilder.groupId = group_id
         reqBuilder.userId = user_id
@@ -121,7 +121,7 @@ class CoolQ {
      * @param is_dismiss 是否解散，如果登录号是群主，则仅在此项为 true 时能够解散
      * @return 结果
      */
-    fun setGroupLeave(group_id: Long, is_dismiss: Boolean): OnebotApi.SetGroupLeaveResp? {
+    override fun setGroupLeave(group_id: Long, is_dismiss: Boolean): OnebotApi.SetGroupLeaveResp? {
         val reqBuilder = OnebotApi.SetGroupLeaveReq.newBuilder()
         reqBuilder.groupId = group_id
         reqBuilder.isDismiss = is_dismiss
@@ -137,7 +137,7 @@ class CoolQ {
      * @param duration      专属头衔有效期，单位秒，-1 表示永久，不过此项似乎没有效果，可能是只有某些特殊的时间长度有效，有待测试
      * @return 结果
      */
-    fun setGroupSpecialTitle(group_id: Long, user_id: Long, special_title: String?, duration: Long): OnebotApi.SetGroupSpecialTitleResp? {
+    override fun setGroupSpecialTitle(group_id: Long, user_id: Long, special_title: String?, duration: Long): OnebotApi.SetGroupSpecialTitleResp? {
         val reqBuilder = OnebotApi.SetGroupSpecialTitleReq.newBuilder()
         reqBuilder.groupId = group_id
         reqBuilder.userId = user_id
@@ -155,7 +155,7 @@ class CoolQ {
      * @param remark  添加后的好友备注（仅在同意时有效）
      * @return 结果
      */
-    fun setFriendAddRequest(flag: String?, approve: Boolean, remark: String?): OnebotApi.SetFriendAddRequestResp? {
+    override fun setFriendAddRequest(flag: String?, approve: Boolean, remark: String?): OnebotApi.SetFriendAddRequestResp? {
         val reqBuilder = OnebotApi.SetFriendAddRequestReq.newBuilder()
         reqBuilder.flag = flag
         reqBuilder.approve = approve
@@ -172,7 +172,7 @@ class CoolQ {
      * @param reason   拒绝理由（仅在拒绝时有效）
      * @return 结果
      */
-    fun setGroupAddRequest(flag: String?, sub_type: String?, approve: Boolean, reason: String?): OnebotApi.SetGroupAddRequestResp? {
+    override fun setGroupAddRequest(flag: String?, sub_type: String?, approve: Boolean, reason: String?): OnebotApi.SetGroupAddRequestResp? {
         val reqBuilder = OnebotApi.SetGroupAddRequestReq.newBuilder()
         reqBuilder.flag = flag
         reqBuilder.subType = sub_type
@@ -186,7 +186,7 @@ class CoolQ {
      *
      * @return 结果
      */
-    fun getLoginInfo(): OnebotApi.GetLoginInfoResp? {
+    override fun getLoginInfo(): OnebotApi.GetLoginInfoResp? {
         val reqBuilder = OnebotApi.GetLoginInfoReq.newBuilder()
         return apiSender.getLoginInfo(botSession, selfId, reqBuilder.build())
     }
@@ -196,7 +196,7 @@ class CoolQ {
      *
      * @return 结果
      */
-    fun getFriendList(): OnebotApi.GetFriendListResp? {
+    override fun getFriendList(): OnebotApi.GetFriendListResp? {
         val reqBuilder = OnebotApi.GetFriendListReq.newBuilder()
         return apiSender.getFriendList(botSession, selfId, reqBuilder.build())
     }
@@ -206,7 +206,7 @@ class CoolQ {
      *
      * @return 结果
      */
-    fun getGroupList(): OnebotApi.GetGroupListResp? {
+    override fun getGroupList(): OnebotApi.GetGroupListResp? {
         val reqBuilder = OnebotApi.GetGroupListReq.newBuilder()
         return apiSender.getGroupList(botSession, selfId, reqBuilder.build())
     }
@@ -218,7 +218,7 @@ class CoolQ {
      * @param no_cache 是否不使用缓存（使用缓存可能更新不及时，但响应更快）
      * @return 结果
      */
-    fun getGroupInfo(group_id: Long, no_cache: Boolean): OnebotApi.GetGroupInfoResp? {
+    override fun getGroupInfo(group_id: Long, no_cache: Boolean): OnebotApi.GetGroupInfoResp? {
         val reqBuilder = OnebotApi.GetGroupInfoReq.newBuilder()
         reqBuilder.groupId = group_id
         reqBuilder.noCache = no_cache
@@ -233,7 +233,7 @@ class CoolQ {
      * @param no_cache 是否不使用缓存（使用缓存可能更新不及时，但响应更快）
      * @return 结果
      */
-    fun getGroupMemberInfo(group_id: Long, user_id: Long, no_cache: Boolean): OnebotApi.GetGroupMemberInfoResp? {
+    override fun getGroupMemberInfo(group_id: Long, user_id: Long, no_cache: Boolean): OnebotApi.GetGroupMemberInfoResp? {
         val reqBuilder = OnebotApi.GetGroupMemberInfoReq.newBuilder()
         reqBuilder.groupId = group_id
         reqBuilder.userId = user_id
@@ -250,7 +250,7 @@ class CoolQ {
      * @param group_id 群号
      * @return 结果
      */
-    fun getGroupMemberList(group_id: Long): OnebotApi.GetGroupMemberListResp? {
+    override fun getGroupMemberList(group_id: Long): OnebotApi.GetGroupMemberListResp? {
         val reqBuilder = OnebotApi.GetGroupMemberListReq.newBuilder()
         reqBuilder.groupId = group_id
         return apiSender.getGroupMemberList(botSession, selfId, reqBuilder.build())

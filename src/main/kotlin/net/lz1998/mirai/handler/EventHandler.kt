@@ -1,8 +1,8 @@
 package net.lz1998.mirai.handler
 
 import com.google.protobuf.Message
-import net.lz1998.mirai.bot.CoolQ
-import net.lz1998.mirai.plugin.CQPlugin
+import net.lz1998.bot.BotPlugin
+import net.lz1998.mirai.bot.Bot
 import net.lz1998.mirai.plugin.CQPluginConfig
 import onebot.OnebotEvent
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,33 +14,33 @@ class EventHandler {
     lateinit var cqPluginConfig: CQPluginConfig
 
 
-    fun handlePrivateMessageEvent(bot: CoolQ, event: OnebotEvent.PrivateMessageEvent) {
-        cqPluginConfig.cqPlugins.forEach {
-            if (it.onPrivateMessage(bot, event) == CQPlugin.MESSAGE_BLOCK) {
+    fun handlePrivateMessageEvent(bot: Bot, event: OnebotEvent.PrivateMessageEvent) {
+        cqPluginConfig.miraiPlugins.forEach {
+            if (it.onPrivateMessage(bot, event) == BotPlugin.MESSAGE_BLOCK) {
                 return
             }
         }
     }
 
-    fun handleGroupMessageEvent(bot: CoolQ, event: OnebotEvent.GroupMessageEvent) {
-        cqPluginConfig.cqPlugins.forEach {
-            if (it.onGroupMessage(bot, event) == CQPlugin.MESSAGE_BLOCK) {
+    fun handleGroupMessageEvent(bot: Bot, event: OnebotEvent.GroupMessageEvent) {
+        cqPluginConfig.miraiPlugins.forEach {
+            if (it.onGroupMessage(bot, event) == BotPlugin.MESSAGE_BLOCK) {
                 return
             }
         }
     }
 
-    fun handleGroupDecreaseNoticeEvent(bot: CoolQ, event: OnebotEvent.GroupDecreaseNoticeEvent) {
-        cqPluginConfig.cqPlugins.forEach {
-            if (it.onGroupDecreaseNotice(bot, event) == CQPlugin.MESSAGE_BLOCK) {
+    fun handleGroupDecreaseNoticeEvent(bot: Bot, event: OnebotEvent.GroupDecreaseNoticeEvent) {
+        cqPluginConfig.miraiPlugins.forEach {
+            if (it.onGroupDecreaseNotice(bot, event) == BotPlugin.MESSAGE_BLOCK) {
                 return
             }
         }
     }
 
-    fun handleGroupIncreaseNoticeEvent(bot: CoolQ, event: OnebotEvent.GroupIncreaseNoticeEvent) {
-        cqPluginConfig.cqPlugins.forEach {
-            if (it.onGroupIncreaseNotice(bot, event) == CQPlugin.MESSAGE_BLOCK) {
+    fun handleGroupIncreaseNoticeEvent(bot: Bot, event: OnebotEvent.GroupIncreaseNoticeEvent) {
+        cqPluginConfig.miraiPlugins.forEach {
+            if (it.onGroupIncreaseNotice(bot, event) == BotPlugin.MESSAGE_BLOCK) {
                 return
             }
         }

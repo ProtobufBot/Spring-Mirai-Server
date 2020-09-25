@@ -2,11 +2,10 @@ package net.lz1998.mirai.handler
 
 import com.google.protobuf.util.JsonFormat
 import net.lz1998.mirai.bot.BotFactory
-import net.lz1998.mirai.bot.CoolQ
-import net.lz1998.mirai.bot.EventProperties
+import net.lz1998.mirai.bot.MiraiBot
+import net.lz1998.mirai.boot.EventProperties
 import onebot.OnebotFrame
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
 import org.springframework.web.socket.*
 import org.springframework.web.socket.handler.TextWebSocketHandler
 import java.util.concurrent.ArrayBlockingQueue
@@ -14,20 +13,17 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 
-@Component
-class WebSocketHandler : TextWebSocketHandler() {
-    val botMap = mutableMapOf<Long, CoolQ>()
-
-    @Autowired
-    lateinit var botFactory: BotFactory
+class WebSocketHandler(
+        eventProperties: EventProperties,
+        var botFactory: BotFactory
+) : TextWebSocketHandler() {
+    val botMap = mutableMapOf<Long, MiraiBot>()
 
     val sessionMap = mutableMapOf<Long, WebSocketSession>()
 
     val jsonFormatParser: JsonFormat.Parser = JsonFormat.parser().ignoringUnknownFields()
 
-
-    val executor:ExecutorService = ThreadPoolExecutor(EventProperties.corePoolSize.toInt(),EventProperties.maxPoolSize.toInt(),EventProperties.keepAliveTime.toLong(),TimeUnit.MILLISECONDS
-            ,ArrayBlockingQueue(EventProperties.workQueueSize.toInt()));
+    var executor: ExecutorService = ThreadPoolExecutor(eventProperties.corePoolSize, eventProperties.maxPoolSize, eventProperties.keepAliveTime, TimeUnit.MILLISECONDS, ArrayBlockingQueue(eventProperties.workQueueSize));
 
     @Autowired
     lateinit var frameHandler: FrameHandler

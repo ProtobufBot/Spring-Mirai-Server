@@ -10,8 +10,8 @@ class BotFactory {
     @Autowired
     lateinit var apiSender: ApiSender
 
-    fun createBot(botId: Long, session: WebSocketSession): CoolQ {
-        val bot = CoolQ()
+    fun createBot(botId: Long, session: WebSocketSession): MiraiBot {
+        val bot = MiraiBot()
         bot.selfId = botId
         bot.botSession = session
         bot.apiSender = apiSender

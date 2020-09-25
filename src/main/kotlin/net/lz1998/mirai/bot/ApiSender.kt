@@ -2,20 +2,15 @@ package net.lz1998.mirai.bot
 
 import com.fasterxml.jackson.databind.util.LRUMap
 import com.google.protobuf.Message
-import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.*
 import onebot.OnebotApi
 import onebot.OnebotFrame
-import org.springframework.stereotype.Component
 import org.springframework.web.socket.BinaryMessage
-import org.springframework.web.socket.TextMessage
 import org.springframework.web.socket.WebSocketSession
 import java.util.*
 
-@Component
 class ApiSender {
     val echoFutureMap = LRUMap<String, CompletableDeferred<OnebotFrame.Frame>>(128, 1024)
-    val jsonFormatPrinter: JsonFormat.Printer = JsonFormat.printer().preservingProtoFieldNames()
 
     fun callApi(session: WebSocketSession, botId: Long, apiReq: Message): Message? {
         val echo = UUID.randomUUID().toString()
