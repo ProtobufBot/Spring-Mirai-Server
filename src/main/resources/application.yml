@@ -1,11 +1,9 @@
+spring:
+  bot:
+    plugin-list: # 配置插件列表（有序），如果插件返回0，继续执行剩余插件，如果插件返回1，终止剩余插件执行
+      - net.lz1998.pbbot.plugin.LogPlugin # 日志插件
+      - net.lz1998.pbbot.plugin.DemoPlugin # 测试插件
+      - net.lz1998.pbbot.plugin.HelloPlugin # 测试插件
+
 server:
   port: 8081
-spring:
-  mirai:
-    event:
-      corePoolSize: 5
-      maxPoolSize: 200
-      keepAliveTime: 2000
-      workQueueSize: 512
-    plugin-list:
-      - net.lz1998.mirai.plugin.DemoPlugin
