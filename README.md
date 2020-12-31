@@ -1,8 +1,11 @@
 # Spring-Mirai-Server
 
-这是个 server demo
+[![QQ群](https://img.shields.io/static/v1?label=QQ%E7%BE%A4&message=335783090&color=blue)](https://jq.qq.com/?_wv=1027&k=B7Of3GMZ)
+
+这是个 websocket server demo，用于处理QQ消息
 
 ## 详细说明
+
 - https://github.com/ProtobufBot/pbbot-spring-boot-starter
 - https://github.com/ProtobufBot/Spring-Mirai-Client
 
