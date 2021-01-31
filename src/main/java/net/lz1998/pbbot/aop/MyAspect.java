@@ -21,7 +21,7 @@ public class MyAspect {
     @Around("pointcut()")
     private Object logHandler(ProceedingJoinPoint pjp) throws Throwable {
         try {
-            log.info("ApiSender 被调用");
+            log.info(pjp.getSignature() + " 被调用");
             return pjp.proceed();
         } catch (Throwable e) {
             log.error("Handling error");
