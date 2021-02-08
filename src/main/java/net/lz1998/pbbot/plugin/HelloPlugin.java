@@ -13,7 +13,8 @@ import java.util.List;
 public class HelloPlugin extends BotPlugin {
     @Override
     public int onPrivateMessage(@NotNull Bot bot, @NotNull OnebotEvent.PrivateMessageEvent event) {
-        // 这里展示了event消息链的用法
+        // 这里展示了event消息链的用法. List里面可能是 at -> text -> image -> face -> text 形式, 根据元素类型组成 List。
+        // List 每一个元素 有type(String)和data(Map<String, String>)，type 表示元素是什么, data 表示元素的具体数据，如at qq，image url，face id
         List<OnebotBase.Message> messageChain = event.getMessageList();
         if (messageChain.size() > 0) {
             OnebotBase.Message message = messageChain.get(0);
