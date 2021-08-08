@@ -35,7 +35,8 @@ public class HelloPlugin extends BotPlugin {
         String text = event.getRawMessage();
         if ("hello".equals(text)) {
             bot.sendGroupMsg(groupId, "hi", false);
+            return MESSAGE_BLOCK; // 当存在多个plugin时，不执行下一个plugin
         }
-        return MESSAGE_BLOCK;
+        return MESSAGE_IGNORE; // 当存在多个plugin时，继续执行下一个plugin
     }
 }
